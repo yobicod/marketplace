@@ -2,6 +2,7 @@
 import { login } from "@/app/api-caller/login";
 import { FORM_ERRORS } from "@/app/const/form";
 import { TOAST_STATUS } from "@/app/const/toast";
+import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -49,8 +50,19 @@ function LoginForm() {
         console.log("🚀 ~ handleSubmitLogin ~ result:", loginResponse);
       }
     } catch (err) {
-      toast.dismiss();
-      toast.error(TOAST_STATUS.error);
+      console.log(err);
+      if (err instanceof Error && (err as any).response) {
+        const axiosError = err as any;
+        if (axiosError.response.status === 404) {
+          toast.dismiss();
+          toast.error(TOAST_STATUS.loginNotFound);
+          return;
+        }
+      } else {
+        // Handle other errors
+        toast.dismiss();
+        toast.error(TOAST_STATUS.error);
+      }
     }
   };
 

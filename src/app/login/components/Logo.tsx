@@ -1,12 +1,12 @@
 import Image from "next/image";
 import React from "react";
 
-function Logo() {
+function LoginLogo() {
   return (
     <div className="h-full flex justify-center items-center">
-      <Image src="/shopping.gif" alt="shopping" width={450} height={450} />
+      <Image src="/login.gif" alt="shopping" width={450} height={450} />
     </div>
   );
 }
 
-export default Logo;
+export default LoginLogo;
